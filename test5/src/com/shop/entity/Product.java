@@ -1,5 +1,6 @@
 package com.shop.entity;
 
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -20,7 +21,9 @@ public class Product {
 	private String productName;
 	private String productDescription;
 	private int price;
-	private int count;
+	private String imgAddress;
+	private String shelfTime;
+	private String type;
 	private Set<Order> oset= new HashSet<Order>();
 	private Set<User> uset = new HashSet<User>();
 	
@@ -50,14 +53,7 @@ public class Product {
 	}
 	public void setPrice(int price) {
 		this.price = price;
-	}
-	public int getCount() {
-		return count;
-	}
-	public void setCount(int count) {
-		this.count = count;
-	}
-	
+	}	
 	@ManyToMany(mappedBy="pset")//表示关联关系由Order维护
 	public Set<Order> getOset() {
 		return oset;
@@ -74,6 +70,24 @@ public class Product {
 	}
 	public void setUset(Set<User> uset) {
 		this.uset = uset;
+	}
+	public String getImgAddress() {
+		return imgAddress;
+	}
+	public void setImgAddress(String imgAdrress) {
+		this.imgAddress = imgAdrress;
+	}
+	public String getType() {
+		return type;
+	}
+	public void setType(String type) {
+		this.type = type;
+	}
+	public String getShelfTime() {
+		return shelfTime;
+	}
+	public void setShelfTime(String shelfTime) {
+		this.shelfTime = shelfTime;
 	}
 	
 	

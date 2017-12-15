@@ -1,10 +1,10 @@
 package com.shop.entity;
 
-import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -23,7 +23,7 @@ public class Order {
 	
 	private int orderId;
 	private int total;
-	private Date date;
+	private String date;
 	private String state;
 	//一个用户对应多个订单--一对多映射
 	private User user;
@@ -44,18 +44,19 @@ public class Order {
 	public void setTotal(int total) {
 		this.total = total;
 	}
-	@ManyToOne
-    @JoinColumn(name="USERID")
+	@ManyToOne(fetch=FetchType.EAGER)
+    @JoinColumn(name="USERID")//@JoinColumn(name = "USERID") ： 指定 ORDER 表中的外键列名
 	public User getUser() {
 		return user;
 	}
 	public void setUser(User user) {
 		this.user = user;
 	}
-	public Date getDate() {
+
+	public String getDate() {
 		return date;
 	}
-	public void setDate(Date date) {
+	public void setDate(String date) {
 		this.date = date;
 	}
 	public String getState() {

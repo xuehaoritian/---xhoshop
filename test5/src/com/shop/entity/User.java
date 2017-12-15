@@ -4,8 +4,10 @@ import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
@@ -18,17 +20,18 @@ import org.hibernate.annotations.GenericGenerator;
 
 @Entity
 @Table(name="USER")
-@Inheritance(strategy=InheritanceType.SINGLE_TABLE)//指定继承关系的生成策略
+/*@Inheritance(strategy=InheritanceType.SINGLE_TABLE)//指定继承关系的生成策略
 @DiscriminatorColumn(name="USERTYPE")//指定区分子类类型的字段
-public class User {
+*/public class User {
 	private int userId;
 	private String userName;
 	private String password;
 	private String mailAddress;
+	private String personalProfile;
 	//用户-产品 多对多
 	private Set<Product> pset = new HashSet<Product>();
 	//一个用户对应多个订单--一对多映射
-	private Set<Order> oset= new HashSet<Order>();
+	//private Set<Order> oset= new HashSet<Order>();
 	
 	@Id
 	@GeneratedValue(generator="xho_gen")
@@ -57,20 +60,29 @@ public class User {
 	public void setMailAddress(String mailAddress) {
 		this.mailAddress = mailAddress;
 	}	
-	@OneToMany(mappedBy="user", targetEntity=Order.class, 
+	//mappedBy：表明是双向关联关系，并且与 user 建立对应
+	//targetEntity：指定了所关联的类型。
+	//cascade：指定级联操作
+	/*@OneToMany(mappedBy="user", targetEntity=Order.class, 
             cascade=CascadeType.ALL)
 	public Set<Order> getOset() {
 		return oset;
 	}
 	public void setOset(Set<Order> oset) {
 		this.oset = oset;
-	}
+	}*/
 	@ManyToMany(mappedBy="uset")//表示关联关系由Product维护
 	public Set<Product> getPset() {
 		return pset;
 	}
 	public void setPset(Set<Product> pset) {
 		this.pset = pset;
+	}
+	public String getPersonalProfile() {
+		return personalProfile;
+	}
+	public void setPersonalProfile(String personalProfile) {
+		this.personalProfile = personalProfile;
 	}
 	
 	
